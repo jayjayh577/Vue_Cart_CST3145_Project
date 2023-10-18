@@ -3,6 +3,8 @@ let courseStore = new Vue ({
     data: {
         sitename: "LessonStore",
         show: true,
+        defaultSort: "subject",
+        sortDirection: "asc", 
         //lesson array with list of lessons 
         lessons: [
             {
@@ -18,81 +20,81 @@ let courseStore = new Vue ({
             {
                 id: 2,
                 subject: "Javascript Tutorials",
-                location: "London",
+                location: "Manchester",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
-                price: "$" + 2000,
+                price: "$" + 1500,
                 available: 5,
                 AddedTOCart: 0
             },
             {
                 id: 3,
                 subject: "C# Tutorials",
-                location: "London",
+                location: "Munbai",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
-                price: "$" + 2000,
+                price: "$" + 3000,
                 available: 5,
                 AddedTOCart: 0
             },
             {
                 id: 4,
                 subject: "Blazor Tutorials",
-                location: "London",
+                location: "Paris",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
-                price: "$" + 2000,
+                price: "$" + 6000,
                 available: 5,
                 AddedTOCart: 0
             },
             {
                 id: 5,
                 subject: "NodeJs Tutorials",
-                location: "London",
+                location: "Ohio",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
-                price: "$" + 2000,
+                price: "$" + 3200,
                 available: 5,
                 AddedTOCart: 0
             },
             {
                 id: 6,
                 subject: "Asp.netCore Tutorials",
-                location: "London",
+                location: "America",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
-                price: "$" + 2000,
+                price: "$" + 7000,
                 available: 5,
                 AddedTOCart: 0
             },
             {
                 id: 7,
                 subject: "Asp.net Mvc Tutorials",
-                location: "London",
+                location: "Barcelona",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
-                price: "$" + 2000,
+                price: "$" + 8100,
                 available: 5,
                 AddedTOCart: 0
             },
             {
                 id: 8,
                 subject: "Phython Tutorials",
-                location: "London",
+                location: "Zambia",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
-                price: "$" + 2000,
+                price: "$" + 1000,
                 available: 5,
                 AddedTOCart: 0
             },
             {
                 id: 9,
                 subject: ".NET Tutorials",
-                location: "London",
+                location: "Colindale",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
-                price: "$" + 2000,
+                price: "$" + 10000,
                 available: 5,
                 AddedTOCart: 0
             },
             {
                 id: 10,
                 subject: "PHP Tutorials",
-                location: "London",
+                location: "Nigeria",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
-                price: "$" + 2000,
+                price: "$" + 500,
                 available: 5,
                 AddedTOCart: 0
             }
@@ -129,7 +131,23 @@ let courseStore = new Vue ({
         ItemsInCart: function () {
             return this.carts.length;
         },
-       
+        sortedLessons() {
+            return this.lessons.slice().sort((a, b) => {
+              // Compare lessons based on the selected criteria
+
+              const sortOrder = this.sortDirection === "asc" ? 1 : -1;
+
+              if (this.defaultSort === "subject") {
+                return sortOrder * a.subject.localeCompare(b.subject);
+              } else if (this.defaultSort === "location") {
+                return sortOrder *  a.location.localeCompare(b.location);
+              } else if (this.defaultSort === "price") {
+                return sortOrder *  a.price.localeCompare(b.price);
+              } else if (this.defaultSort === "available") {
+                return sortOrder *  a.available - b.available;
+              }
+            });
+          },
     }
 
 })

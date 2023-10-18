@@ -18,6 +18,23 @@
             Cart
         </button>
         <h3>Items in Cart: {{ ItemsInCart }}</h3>
+
+        <div>
+            <label for="sortSelect">Sort By: </label>
+            <select id="sortSelect" v-model="defaultSort">
+              <option value="subject">Subject</option>
+              <option value="location">Location</option>
+              <option value="price">Price</option>
+              <option value="available">Available</option>
+            </select>
+
+            <label for="sortDirection">Sort Direction: </label>
+            <select id="sortDirection" v-model="sortDirection">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+          </div>
+
         <section v-if="!show">
             <h1 style="text-align: center;">
                Welcome To The Checkout Page.
@@ -44,7 +61,7 @@
 
         <main v-else="show">
         <div class="row  align-items-center">
-            <div v-for="lesson in lessons" class="col-lg-2 col-md-4 mt-1 ">
+            <div v-for="lesson in sortedLessons" class="col-lg-2 col-md-4 mt-1 ">
                 <div class="card bg-dark text-light" style="width: 18rem;">
                     <img width="200" height="200" v-bind:src="lesson.image" class="card-img-top">
                     <div class="card-body">
