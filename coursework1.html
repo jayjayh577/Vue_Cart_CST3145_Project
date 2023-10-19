@@ -42,7 +42,7 @@
               type="text"
               id="searchInput"
               v-model="searchQuery"
-              @input=""
+              @input="performSearch"
               placeholder="Search by subject, location, or price"
             />
           </div>
@@ -67,7 +67,6 @@
                     </div>   
                 </div>
             </div>
-           
 
          </section>
 

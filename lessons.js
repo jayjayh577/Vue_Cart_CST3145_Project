@@ -5,7 +5,7 @@ let courseStore = new Vue ({
         show: true,
         defaultSort: "subject",
         sortDirection: "asc", 
-         searchQuery: "",
+        searchQuery: "",
         //lesson array with list of lessons 
         lessons: [
             {
@@ -16,7 +16,6 @@ let courseStore = new Vue ({
                 price: "$" + 2000,
                 available: 5,
                 AddedTOCart: 0,
-                time: Date()
             },
             {
                 id: 2,
@@ -123,22 +122,39 @@ let courseStore = new Vue ({
             return lesson.available > 0;
         },
         removeFromCart(lesson) {
-            // Check if the lesson is in the cart and remove it
-            const index = this.carts.findIndex(item => item.id === lesson.id);
-            if (index > -1) {
-              this.carts.splice(index, 1);
-              lesson.available++;
+
+          const index = this.carts.indexOf(lesson);
+
+          if (index !== -1) {
+            if (lesson.AddedTOCart > 1) {
+              // Decrease the AddedTOCart count
               lesson.AddedTOCart--;
+            } else {
+              // Remove the lesson from the cart if AddedTOCart is 1
+              lesson.AddedTOCart--;
+              this.carts.splice(index, 1);
             }
+              lesson.available++;
+
+              console.log(this.carts);
+              // lesson.AddedTOCart--;
           }
+        },
+        performSearch() {
+          this.lessons = this.lessons.filter((lesson) => {
+            const query = this.searchQuery.toLowerCase();
+            return (
+              lesson.subject.toLowerCase().includes(query) ||
+              lesson.location.toLowerCase().includes(query) ||
+              lesson.price.toLowerCase().includes(query)
+            );
+          });
+        },
     },
     computed: {
         ItemsInCart: function () {
             return this.carts.length;
         },
-        filteredLessons() {
-            return this.lessons;
-          },
         sortedLessons() {
             return this.lessons.slice().sort((a, b) => {
               // Compare lessons based on the selected criteria
@@ -158,7 +174,7 @@ let courseStore = new Vue ({
               }
             });
           },
-          sortedCarts() {
+        sortedCarts() {
             return this.carts.slice().sort((a, b) => {
               // Compare lessons based on the selected criteria
               const sortOrder = this.sortDirection === "asc" ? 1 : -1;
