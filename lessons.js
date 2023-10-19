@@ -5,6 +5,7 @@ let courseStore = new Vue ({
         show: true,
         defaultSort: "subject",
         sortDirection: "asc", 
+         searchQuery: "",
         //lesson array with list of lessons 
         lessons: [
             {
@@ -55,7 +56,7 @@ let courseStore = new Vue ({
             },
             {
                 id: 6,
-                subject: "Asp.netCore Tutorials",
+                subject: "Asp.net Core Tutorials",
                 location: "America",
                 image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
                 price: "$" + 7000,
@@ -106,11 +107,15 @@ let courseStore = new Vue ({
             if (this.canAddToCart(lesson)) {
                 //check the list in the cart. If the lesson id already exists in the list of carts then just increase the number of classes available.
                 // That means you need an extra property 
-                if(lesson.id)
-                this.carts.push(lesson);
-
+                if(lesson.AddedTOCart > 0){
+                  lesson.AddedTOCart++;
+                }else {
+                  lesson.AddedTOCart++;
+                  this.carts.push(lesson);
+                }
+              
                 lesson.available--;
-                lesson.AddedTOCart++;
+                
                  console.log(this.carts);
               }
         },
@@ -131,6 +136,9 @@ let courseStore = new Vue ({
         ItemsInCart: function () {
             return this.carts.length;
         },
+        filteredLessons() {
+            return this.lessons;
+          },
         sortedLessons() {
             return this.lessons.slice().sort((a, b) => {
               // Compare lessons based on the selected criteria
@@ -142,7 +150,27 @@ let courseStore = new Vue ({
               } else if (this.defaultSort === "location") {
                 return sortOrder *  a.location.localeCompare(b.location);
               } else if (this.defaultSort === "price") {
-                return sortOrder *  a.price.localeCompare(b.price);
+                const priceA = parseFloat(a.price.replace('$', ''));
+                const priceB = parseFloat(b.price.replace('$', ''));
+                return sortOrder * (priceA - priceB);
+              } else if (this.defaultSort === "available") {
+                return sortOrder *  a.available - b.available;
+              }
+            });
+          },
+          sortedCarts() {
+            return this.carts.slice().sort((a, b) => {
+              // Compare lessons based on the selected criteria
+              const sortOrder = this.sortDirection === "asc" ? 1 : -1;
+
+              if (this.defaultSort === "subject") {
+                return sortOrder * a.subject.localeCompare(b.subject);
+              } else if (this.defaultSort === "location") {
+                return sortOrder *  a.location.localeCompare(b.location);
+              } else if (this.defaultSort === "price") {
+                const priceA = parseFloat(a.price.replace('$', ''));
+                const priceB = parseFloat(b.price.replace('$', ''));
+                return sortOrder * (priceA - priceB);
               } else if (this.defaultSort === "available") {
                 return sortOrder *  a.available - b.available;
               }
