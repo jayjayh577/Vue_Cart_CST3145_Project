@@ -6,8 +6,6 @@
     <link rel="stylesheet" href="coursework1.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
-    <script src="https://kit.fontawesome.com/6d50a6b34d.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 <body>
@@ -58,9 +56,8 @@
                         <img width="200" height="200" v-bind:src="cart.image" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">Subject: {{cart.subject}}</h5>
-                        <p class="card-text">id: {{cart.id}}</p>
-                        <p class="card-text">Location: {{cart.location}}</p>
-                        <p class="card-text">Price: {{cart.price}}</p>
+                        <p class="card-text"><i class="fa-solid fa-location-dot"></i> Location: {{cart.location}}</p>
+                        <p class="card-text"> Price: <i class="fa-solid fa-sterling-sign"></i> {{cart.price}}</p> 
                         <p class="card-text">Lessons Added: {{cart.AddedTOCart}}</p>
                         <input @click="removeFromCart(cart)" value="Remove course" class="btn text-dark btn-light"></input>
                     </div>
@@ -77,11 +74,9 @@
                     <img width="200" height="200" v-bind:src="lesson.image" class="card-img-top">
                     <div class="card-body">
                         <h5 class="card-title">Subject: {{lesson.subject}}</h5>
-                        <p class="card-text">Location: {{lesson.location}}</p>
-                        <p class="card-text">Price: {{lesson.price}}</p>
+                        <p class="card-text"><i class="fa-solid fa-location-dot"></i> Location: {{lesson.location}}</p>
+                        <p class="card-text">Price: <i class="fa-solid fa-sterling-sign"></i> {{lesson.price}}</p>
                         <p class="card-text">Spaces Available: {{lesson.available}}</p>
-
-                        <p class="card-text">TIme Created: {{lesson.time}}</p>
 
                         <input class="btn text-dark btn-light" v-on:click="addToCart(lesson)" value="add course" v-if="lesson.available != 0">
 
@@ -95,6 +90,8 @@
 
     </div>
 
+    <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
+    <script src="https://kit.fontawesome.com/6d50a6b34d.js" crossorigin="anonymous"></script>
     <script  type="module" src="data/lessonArray.js"></script>
     <script  type="module" src="lessons.js"></script>
 
