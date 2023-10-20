@@ -1,4 +1,4 @@
-lessons: [
+let lessons = [
     {
         id: 1,
         subject: "VueJs Tutorials",
@@ -91,5 +91,5 @@ lessons: [
     }
 ]
 
-// export default afterSchoolActivity;
+// export default lessons;
 export default lessons;
