@@ -10,7 +10,7 @@ import lessons from './data//lessonArray.js';
         lessons: lessons,
         //lesson array with list of lessons 
         // lessons: [
-        //     {
+        //     {s
         //         id: 1,
         //         subject: "VueJs Tutorials",
         //         location: "London",
@@ -142,22 +142,20 @@ import lessons from './data//lessonArray.js';
               // lesson.AddedTOCart--;
           }
         },
-        performSearch() {
-          this.lessons = this.lessons.filter((lesson) => {
-            const query = this.searchQuery.toLowerCase();
-            return (
-              lesson.subject.toLowerCase().includes(query) ||
-              lesson.location.toLowerCase().includes(query) ||
-              lesson.price.toLowerCase().includes(query)
-            );
-          });
-        },
     },
     computed: {
         ItemsInCart: function () {
             return this.carts.length;
         },
-        sortedLessons() {
+        searchLessons() {
+          const query = this.searchQuery.toLowerCase();
+    return this.lessons.filter((lesson) => {
+      return (
+        lesson.subject.toLowerCase().includes(query) ||
+        lesson.location.toLowerCase().includes(query)
+      );
+    });
+
             return this.lessons.slice().sort((a, b) => {
               // Compare lessons based on the selected criteria
 

@@ -40,7 +40,7 @@
               type="text"
               id="searchInput"
               v-model="searchQuery"
-              @input="performSearch"
+              @input="searchLessons"
               placeholder="Search by subject, location, or price"
             />
           </div>
@@ -69,7 +69,7 @@
 
         <main v-else="show">
         <div class="row  align-items-center">
-            <div v-for="lesson in sortedLessons" class="col-lg-2 col-md-4 mt-1 ">
+            <div v-for="lesson in searchLessons" class="col-lg-2 col-md-4 mt-1 ">
                 <div class="card bg-dark text-light" style="width: 18rem;">
                     <img width="200" height="200" v-bind:src="lesson.image" class="card-img-top">
                     <div class="card-body">
