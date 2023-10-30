@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="coursework1.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    <title>Document</title>
+    <title v-text="sitename">Cart</title>
 </head>
 <body>
     <div id="app">
@@ -47,7 +46,7 @@
 
         <section v-if="!show">
             <h1 style="text-align: center;">
-               Welcome To The Checkout Page.
+              Checkout Page
             </h1>
 
             <div class="row  align-items-center">
@@ -55,32 +54,57 @@
                     <div class="card bg-dark text-light" style="width: 18rem;">
                         <img width="200" height="200" v-bind:src="cart.image" class="card-img-top">
                     <div class="card-body">
+                        
                         <h5 class="card-title">Subject: {{cart.subject}}</h5>
+
                         <p class="card-text"><i class="fa-solid fa-location-dot"></i> Location: {{cart.location}}</p>
-                        <p class="card-text"> Price: <i class="fa-solid fa-sterling-sign"></i> {{cart.price}}</p> 
+
+                        <p class="card-text"> Price: <i class="fa-solid fa-sterling-sign"></i> {{cart.price}}</p>
+                        
                         <p class="card-text">Lessons Added: {{cart.AddedTOCart}}</p>
+
                         <input @click="removeFromCart(cart)" value="Remove course" class="btn text-dark btn-light"></input>
                     </div>
                     </div>   
                 </div>
             </div>
+            <h1> Checkout Info </h1>
+
+            <label for="">Name:</label>
+            <input v-model="checkoutInfo.Name" type="text" placeholder="Input Your Name" name="" id="">
+
+            <label for="">Phone Number:</label>
+            <input v-model="checkoutInfo.Number" type="tel" placeholder="Input Your Name" name="" id="">
+
+            <div style="background-color: grey; height: 10vh;width: 200px; margin: auto; padding: 10px; color: white; ">
+                <div>Name: {{checkoutInfo.Name}}</div>
+                <div>Number: {{checkoutInfo.Number}}</div>
+            </div>
+
+            <input class="btn bg-dark text-light" type="button" v-on:click="Alert()" value="Checkout" v-if="">
+
+            <input class="btn bg-dark text-light" type="button" disabled="Alert" value="Checkout" v-else>
 
          </section>
 
         <main v-else="show">
         <div class="row  align-items-center">
             <div v-for="lesson in searchLessons" class="col-lg-2 col-md-4 mt-1 ">
-                <div class="card bg-dark text-light" style="width: 18rem;">
-                    <img width="200" height="200" v-bind:src="lesson.image" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Subject: {{lesson.subject}}</h5>
+                <div class="card bg-light woop  ">
+
+                    <img width="200" height="200" v-bind:src="lesson.image" class="card-img-top"> 
+
+                   <div class="card-body text-center">
+                        
+                    <h2 class="mb-5 card-title">{{lesson.subject}}</h2>
+
                         <p class="card-text"><i class="fa-solid fa-location-dot"></i> Location: {{lesson.location}}</p>
                         <p class="card-text">Price: <i class="fa-solid fa-sterling-sign"></i> {{lesson.price}}</p>
                         <p class="card-text">Spaces Available: {{lesson.available}}</p>
 
-                        <input class="btn text-dark btn-light" v-on:click="addToCart(lesson)" value="add course" v-if="lesson.available != 0">
+                        <input class="btn rounded-5 text-light btn-dark" v-on:click="addToCart(lesson)" value="add course" v-if="lesson.available != 0">
 
-                        <input class="btn text-dark btn-light" disabled="addToCart" value="Out Of Stock" v-else></input>
+                        <input class="btn rounded-5 text-dark btn-light" disabled="addToCart" value="Out Of Stock" v-else>
 
                     </div>
                 </div>
@@ -92,6 +116,7 @@
 
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
     <script src="https://kit.fontawesome.com/6d50a6b34d.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script  type="module" src="data/lessonArray.js"></script>
     <script  type="module" src="lessons.js"></script>
 

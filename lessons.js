@@ -8,6 +8,10 @@ import lessons from './data//lessonArray.js';
         sortDirection: "asc", 
         searchQuery: "", 
         lessons: lessons,
+        checkoutInfo: {
+          Name: "",
+          Number: "",
+        },
         carts: [],
     },
     methods: {
@@ -55,32 +59,33 @@ import lessons from './data//lessonArray.js';
             return this.carts.length;
         },
         searchLessons() {
-    const query = this.searchQuery.toLowerCase();
-      
-    // Filter the lessons based on the search query
-    const filteredLessons = this.lessons.filter((lesson) => {
-      return (
-        lesson.subject.toLowerCase().includes(query) ||
-        lesson.location.toLowerCase().includes(query)
-      );
-    });
+          const query = this.searchQuery.toLowerCase();
+            
+          // Filter the lessons based on the search query
+          const filteredLessons = this.lessons.filter((lesson) => {
+            return (
+              lesson.subject.toLowerCase().includes(query) ||
+              lesson.location.toLowerCase().includes(query)||
+              lesson.price.toLowerCase().includes(query)
+            );
+          });
 
-    // Sort the filtered lessons
-    const sortOrder = this.sortDirection === "asc" ? 1 : -1;
-    return filteredLessons.slice().sort((a, b) => {
-      if (this.defaultSort === "subject") {
-        return sortOrder * a.subject.localeCompare(b.subject);
-      } else if (this.defaultSort === "location") {
-        return sortOrder * a.location.localeCompare(b.location);
-      }else if (this.defaultSort === "price") {
-        const priceA = parseFloat(a.price.replace('$', ''));
-        const priceB = parseFloat(b.price.replace('$', ''));
-        return sortOrder * (priceA - priceB);
+          // Sort the filtered lessons
+          const sortOrder = this.sortDirection === "asc" ? 1 : -1;
+          return filteredLessons.slice().sort((a, b) => {
+            if (this.defaultSort === "subject") {
+              return sortOrder * a.subject.localeCompare(b.subject);
+            } else if (this.defaultSort === "location") {
+              return sortOrder * a.location.localeCompare(b.location);
+            }else if (this.defaultSort === "price") {
+              const priceA = parseFloat(a.price.replace('$', ''));
+              const priceB = parseFloat(b.price.replace('$', ''));
+              return sortOrder * (priceA - priceB);
 
-      } else if (this.defaultSort === "available") {
-        return sortOrder * (a.available - b.available);
-      }
-    });
+            } else if (this.defaultSort === "available") {
+              return sortOrder * (a.available - b.available);
+            }
+          });
           },
         sortedCarts() {
             return this.carts.slice().sort((a, b) => {
@@ -100,6 +105,9 @@ import lessons from './data//lessonArray.js';
               }
             });
           },
+          Alert(){
+              alert("Congratulations Bro")
+          }
     }
 
 })

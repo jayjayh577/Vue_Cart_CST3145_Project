@@ -1,7 +1,7 @@
 let lessons = [
     {
         id: 1,
-        subject: "VueJs Tutorials",
+        subject: "VueJs",
         location: "London",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price:  "$" + 2000,
@@ -10,7 +10,7 @@ let lessons = [
     },
     {
         id: 2,
-        subject: "Javascript Tutorials",
+        subject: "Javascript",
         location: "Manchester",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price: "$" +1500,
@@ -19,7 +19,7 @@ let lessons = [
     },
     {
         id: 3,
-        subject: "C# Tutorials",
+        subject: "C#",
         location: "Munbai",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price: "$" +3000,
@@ -28,7 +28,7 @@ let lessons = [
     },
     {
         id: 4,
-        subject: "Blazor Tutorials",
+        subject: "Blazor",
         location: "Paris",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price: "$" + 6000,
@@ -37,7 +37,7 @@ let lessons = [
     },
     {
         id: 5,
-        subject: "NodeJs Tutorials",
+        subject: "NodeJs",
         location: "Ohio",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price: "$" + 3200,
@@ -46,7 +46,7 @@ let lessons = [
     },
     {
         id: 6,
-        subject: "Asp.net Core Tutorials",
+        subject: "Asp.net Core",
         location: "America",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price: "$" + 7000,
@@ -55,7 +55,7 @@ let lessons = [
     },
     {
         id: 7,
-        subject: "Asp.net Mvc Tutorials",
+        subject: "Asp.net Mvc",
         location: "Barcelona",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price: "$" + 8100,
@@ -64,7 +64,7 @@ let lessons = [
     },
     {
         id: 8,
-        subject: "Phython Tutorials",
+        subject: "Phython",
         location: "Zambia",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price: "$" + 1000,
@@ -73,7 +73,7 @@ let lessons = [
     },
     {
         id: 9,
-        subject: ".NET Tutorials",
+        subject: ".NET",
         location: "Colindale",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price: "$" + 10000,
@@ -82,7 +82,7 @@ let lessons = [
     },
     {
         id: 10,
-        subject: "PHP Tutorials",
+        subject: "PHP",
         location: "Nigeria",
         image: "https://dotnet.microsoft.com/static/images/refresh/blazor-hero.png",
         price: "$" + 500,
