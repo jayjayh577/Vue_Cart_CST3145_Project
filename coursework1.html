@@ -51,9 +51,11 @@
 
             <div class="row  align-items-center">
                 <div v-for="cart in sortedCarts" class="col-lg-2 col-md-4 mt-1" >
-                    <div class="card bg-dark text-light" style="width: 18rem;">
-                        <img width="200" height="200" v-bind:src="cart.image" class="card-img-top">
-                    <div class="card-body">
+                    <div class="card bg-light woop" >
+
+                        <img width="200" height="200" v-bind:src="cart.image" class="card-img-top"> 
+
+                    <div class="card-body text-center">
                         
                         <h5 class="card-title">Subject: {{cart.subject}}</h5>
 
@@ -63,7 +65,7 @@
                         
                         <p class="card-text">Lessons Added: {{cart.AddedTOCart}}</p>
 
-                        <input @click="removeFromCart(cart)" value="Remove course" class="btn text-dark btn-light"></input>
+                        <input @click="removeFromCart(cart)" value="Remove course" class="btn rounded-5 text-light btn-dark"></input>
                     </div>
                     </div>   
                 </div>
