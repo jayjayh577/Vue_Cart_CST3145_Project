@@ -3,6 +3,7 @@ import lessons from './data//lessonArray.js';
     el: "#app",
     data: {
         sitename: "LessonStore",
+        checkoutinfo: "Check Out Info",
         show: true,
         defaultSort: "subject",
         sortDirection: "asc", 
