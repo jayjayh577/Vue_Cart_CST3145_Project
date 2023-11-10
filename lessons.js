@@ -57,7 +57,7 @@ import lessons from './data//lessonArray.js';
           }
         },
         checkout() {
-          alert(`Congratulations ${this.NameValid} `);
+          alert(`Congratulations ${this.NameValid} You will be called on ${this.NumberValid} When our items are available`);
         },
     },
     computed: {

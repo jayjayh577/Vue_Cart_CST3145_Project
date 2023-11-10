@@ -1,3 +1,17 @@
 .woop{
     margin: auto;
 }
+button {
+    background-color: black; /* Bootstrap primary color */
+    color: #fff; /* Text color */
+    padding: 10px 20px; /* Adjust padding as needed */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px; /* Adjust margin as needed */
+  }
+  
+  button:disabled {
+    background-color: #d1d1d1; /* Adjust the color for disabled state */
+    cursor: not-allowed;
+  }
