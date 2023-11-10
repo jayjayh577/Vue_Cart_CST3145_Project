@@ -5,14 +5,16 @@ import lessons from './data//lessonArray.js';
         sitename: "LessonStore",
         checkoutinfo: "Check Out Info",
         show: true,
-        defaultSort: "subject",
+        defaultSort: "null",
         sortDirection: "asc", 
-        searchQuery: "", 
+        searchQuery:"", 
         lessons: lessons,
         checkoutInfo: {
           Name: "",
           Number: "",
         },
+        NameValid: "",
+        NumberValid: "",
         carts: [],
     },
     methods: {
@@ -54,6 +56,9 @@ import lessons from './data//lessonArray.js';
               // lesson.AddedTOCart--;
           }
         },
+        checkout() {
+          alert(`Congratulations ${this.NameValid} `);
+        },
     },
     computed: {
         ItemsInCart: function () {
@@ -66,8 +71,8 @@ import lessons from './data//lessonArray.js';
           const filteredLessons = this.lessons.filter((lesson) => {
             return (
               lesson.subject.toLowerCase().includes(query) ||
-              lesson.location.toLowerCase().includes(query)||
-              lesson.price.toLowerCase().includes(query)
+              lesson.location.toLowerCase().includes(query) ||
+              lesson.price.toString().toLowerCase().includes(query)  // Convert to string before using toLowerCase
             );
           });
 
@@ -79,8 +84,8 @@ import lessons from './data//lessonArray.js';
             } else if (this.defaultSort === "location") {
               return sortOrder * a.location.localeCompare(b.location);
             }else if (this.defaultSort === "price") {
-              const priceA = parseFloat(a.price.replace('$', ''));
-              const priceB = parseFloat(b.price.replace('$', ''));
+              const priceA = parseFloat(a.price);
+              const priceB = parseFloat(b.price);
               return sortOrder * (priceA - priceB);
 
             } else if (this.defaultSort === "available") {
@@ -106,9 +111,14 @@ import lessons from './data//lessonArray.js';
               }
             });
           },
-          Alert(){
-              alert("Congratulations Bro")
+          isNameandNumberValid() {
+            const namePattern = /^[a-zA-Z ]+$/;
+            const phoneNumberTest =
+              /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+            return (
+              namePattern.test(this.NameValid) &&
+              phoneNumberTest.test(this.NumberValid)
+            );
           }
-    }
-
+    },
 })
