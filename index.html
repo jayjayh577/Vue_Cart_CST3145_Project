@@ -57,7 +57,7 @@
                   id="searchInput"
                   v-model="searchQuery"
                   @input="searchLessons"
-                  placeholder="Search by subject, location, or price"
+                  placeholder="Search"
                 />
               </div>
             </div>
@@ -83,7 +83,7 @@
                         
                         <p class="card-text">Lessons Added: {{cart.AddedTOCart}}</p>
 
-                        <input @click="removeFromCart(cart)" value="Remove course" class="btn rounded-5 text-light btn-dark"></input>
+                        <button @click="removeFromCart(cart)"  class="btn rounded-5 text-light btn-dark">Remove course</button>
                     </div>
                     </div>   
                 </div>
@@ -148,9 +148,10 @@
                         <p class="card-text">Price: <i class="fa-solid fa-sterling-sign"></i> {{lesson.price}}</p>
                         <p class="card-text">Spaces Available: {{lesson.available}}</p>
 
-                        <input class="btn rounded-5 text-light btn-dark" v-on:click="addToCart(lesson)" value="add course" v-if="lesson.available != 0">
+                        <button class="btn rounded-5 text-light btn-dark" v-on:click="addToCart(lesson)" v-if="lesson.available != 0"> add course </button>
 
-                        <input class="btn rounded-5 text-dark btn-light" disabled="addToCart" value="Out Of Stock" v-else>
+                        <button class="btn rounded-5 text-dark btn-light" disabled="addToCart" v-else> 
+                        Out Of Stock</button>
 
                     </div>
                 </div>
