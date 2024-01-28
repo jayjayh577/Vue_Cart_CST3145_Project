@@ -35,20 +35,51 @@
           });
       },
 
-        addToCart: function(lesson){
-            if (this.canAddToCart(lesson)) {
-                if(lesson.AddedTOCart > 0){
-                  lesson.AddedTOCart++;
-                }else {
-                  lesson.AddedTOCart++;
-                  this.carts.push(lesson);
-                }
-              
-                lesson.available--;
-                
-                 console.log(this.carts);
-              }
-        },
+      addToCart: function (lesson) {
+        if (this.canAddToCart(lesson)) {
+          if (lesson.AddedTOCart > 0) {
+            lesson.AddedTOCart++;
+          } else {
+            lesson.AddedTOCart++;
+            this.carts.push(lesson);
+          }
+      
+          lesson.available--;
+      
+          // Update the server with the new availability
+          this.updateLessonAvailability(lesson);
+      
+          console.log(this.carts);
+        }
+      },
+      
+      updateLessonAvailability: function (lesson) {
+        const updateData = {
+          available: lesson.available,
+        };
+      
+        // Make a PUT request to update the lesson on the server
+        fetch(`https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Lessons/${lesson.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updateData),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then((json) => {
+            console.log('Lesson updated successfully on the server:', json);
+          })
+          .catch((error) => {
+            console.error('Error updating lesson availability:', error);
+          });
+      },
+      
         canAddToCart: function(lesson){
             return lesson.available > 0;
         },
