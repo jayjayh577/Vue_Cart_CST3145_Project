@@ -41,25 +41,30 @@
             lesson.AddedTOCart++;
           } else {
             lesson.AddedTOCart++;
+            if (!lesson._id) {
+              console.error('Lesson ID is missing. Please check your lesson object.');
+              return;
+            }
             this.carts.push(lesson);
           }
       
-          lesson.available--;
-      
-          // Update the server with the new availability
-          this.updateLessonAvailability(lesson);
+          // Update the lesson availability locally
+          if (lesson.available > 0) {
+            lesson.available --;
+          }
       
           console.log(this.carts);
         }
       },
       
-      updateLessonAvailability: function (lesson) {
+    
+  
+      updateLessonAvailability: function (lessonId, available) {
         const updateData = {
-          available: lesson.available,
+          available: available,
         };
       
-        // Make a PUT request to update the lesson on the server
-        fetch(`https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Lessons/${lesson.id}`, {
+        fetch(`https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Products/${lessonId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -72,13 +77,14 @@
             }
             return response.json();
           })
-          .then((json) => {
-            console.log('Lesson updated successfully on the server:', json);
+          .then((updatedLesson) => {
+            console.log('Lesson updated successfully on the server:', updatedLesson);
           })
           .catch((error) => {
             console.error('Error updating lesson availability:', error);
           });
       },
+      
       
         canAddToCart: function(lesson){
             return lesson.available > 0;
@@ -112,12 +118,17 @@
           // Create an array to store the items in the cart
           const cartItems = this.carts.map((item) => {
             return {
-              lesson_id: item.id,  // Adjust this based on the structure of your lesson objects
+              lesson_id: item._id,  
               addedToCart: item.AddedTOCart,
-              // Add other properties as needed
+              removedfromcart: item.available,
             };
           });
         
+                    
+          // Update lesson availability on the server for each lesson in the cart
+          cartItems.forEach((cartItem) => {
+            this.updateLessonAvailability(cartItem.lesson_id, cartItem.removedfromcart);
+          });
 
           const postData = {
             name: this.NameValid,
@@ -152,6 +163,7 @@
         }
         
     },
+    
     computed: {
         ItemsInCart: function () {
             return this.carts.length;
