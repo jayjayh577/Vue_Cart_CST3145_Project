@@ -1,5 +1,4 @@
-import lessons from './data//lessonArray.js';
-  let courseStore = new Vue ({
+ let courseStore = new Vue ({
     el: "#app",
     data: {
         sitename: "LessonStore",
@@ -15,34 +14,29 @@ import lessons from './data//lessonArray.js';
         },
         NameValid: "",
         NumberValid: "",
+        isLoading: false,
         carts: [],
+        searchCriteria: 'subject',
     },
     methods: {
       fetchDataFromAPI: function() {
-        fetch('http://test-1-env.eba-bwe75i22.eu-north-1.elasticbeanstalk.com/collections/Products')
-          .then(response => {
-            if (!response.ok) {
-              throw new Error('Network response was not ok');
-            }
-            return response.json();
-          })
+        this.isLoading = true;
+
+        fetch('https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Products')
+          .then(response => response.json())
           .then(data => {
-            
-            this.lessons = data; // Assuming your lessons data structure is the same as the fetched data
+            this.lessons = data;
           })
           .catch(error => {
             console.error('Error fetching data from API:', error);
           })
           .finally(() => {
-            this.isLoading = false; // Set loading flag to false, regardless of success or failure
+            this.isLoading = false;
           });
       },
 
-
         addToCart: function(lesson){
             if (this.canAddToCart(lesson)) {
-                //check the list in the cart. If the lesson id already exists in the list of carts then just increase the number of classes available.
-                // That means you need an extra property 
                 if(lesson.AddedTOCart > 0){
                   lesson.AddedTOCart++;
                 }else {
@@ -78,43 +72,104 @@ import lessons from './data//lessonArray.js';
           }
         },
         checkout() {
-          alert(`Congratulations ${this.NameValid} You will be called on ${this.NumberValid} When our items are available`);
-        },
+          // Check if there are items in the cart
+          if (this.carts.length === 0) {
+            alert('Your cart is empty. Add items before checking out.');
+            return;
+          }
+        
+          // Create an array to store the items in the cart
+          const cartItems = this.carts.map((item) => {
+            return {
+              lesson_id: item.id,  // Adjust this based on the structure of your lesson objects
+              addedToCart: item.AddedTOCart,
+              // Add other properties as needed
+            };
+          });
+        
+
+          const postData = {
+            name: this.NameValid,
+            phoneNumber: this.NumberValid,
+            cartItems: cartItems,
+          };
+        
+          // Send a POST request to the server
+          fetch('https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Order', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(postData),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then((json) => {
+              alert(`Congratulations ${this.NameValid}! Your order has been placed.`);
+              console.log('Success:', json);
+              
+              // Clear the cart after successful checkout
+              this.carts = [];
+            })
+            .catch((error) => {
+              console.error('Error during checkout:', error);
+            });
+        }
+        
     },
     computed: {
         ItemsInCart: function () {
             return this.carts.length;
         },
-        searchLessons() {
-          const query = this.searchQuery.toLowerCase();
-            
-          // Filter the lessons based on the search query
-          const filteredLessons = this.lessons.filter((lesson) => {
-            return (
-              lesson.subject.toLowerCase().includes(query) ||
-              lesson.location.toLowerCase().includes(query) ||
-              lesson.price.toString().toLowerCase().includes(query)  // Convert to string before using toLowerCase
-            );
-          });
 
-          // Sort the filtered lessons
+        DisplayLessons() {
+          // Sort all lessons
           const sortOrder = this.sortDirection === "asc" ? 1 : -1;
-          return filteredLessons.slice().sort((a, b) => {
+          return this.lessons.slice().sort((a, b) => {
             if (this.defaultSort === "subject") {
               return sortOrder * a.subject.localeCompare(b.subject);
             } else if (this.defaultSort === "location") {
               return sortOrder * a.location.localeCompare(b.location);
-            }else if (this.defaultSort === "price") {
+            } else if (this.defaultSort === "price") {
               const priceA = parseFloat(a.price);
               const priceB = parseFloat(b.price);
               return sortOrder * (priceA - priceB);
-
             } else if (this.defaultSort === "available") {
               return sortOrder * (a.available - b.available);
             }
           });
-          },
-          
+        },
+        
+        searchLessons() {
+          const query = this.searchQuery.toLowerCase().trim();
+          const criteria = this.searchCriteria;
+        
+          // Check if the search query is empty
+          if (query === '') {
+            // Reset this.lessons with the original data (or handle it based on your needs)
+            this.fetchDataFromAPI();
+            return;
+          }
+        
+          // Use the selected criteria in the API endpoint
+          const apiEndpoint = `https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Products/search?${criteria}=${query}`;
+        
+          // Fetch lessons based on the selected criteria
+          fetch(apiEndpoint)
+            .then(response => response.json())
+            .then(data => {
+              this.lessons = data;
+            })
+            .catch(error => {
+              console.error(`Error fetching data from search API (${criteria}):`, error);
+            });
+        },
+
+         
         sortedCarts() {
             return this.carts.slice().sort((a, b) => {
               // Compare lessons based on the selected criteria
@@ -144,8 +199,8 @@ import lessons from './data//lessonArray.js';
           }
     },
 
-    mounted() {
-      // Fetch data when the component is mounted
-      this.fetchDataFromAPI();
-    },
+     mounted() {
+    // Fetch data when the component is mounted
+    this.fetchDataFromAPI();
+  },
 });

@@ -51,14 +51,21 @@
                   <option value="desc">Descending</option>
                 </select>
           
-                <!-- <input
+                <!-- Add this select element to your HTML -->
+                <select class="form-select me-2" v-model="searchCriteria">
+                  <option value="subject">Subject</option>
+                  <option value="location">Location</option>
+                </select>
+
+                <!-- Keep the existing input for the search query -->
+                <input
                   type="text"
                   class="form-control me-2"
                   id="searchInput"
                   v-model="searchQuery"
                   @input="searchLessons"
                   placeholder="Search"
-                /> -->
+                />
               </div>
             </div>
           </nav>
@@ -133,9 +140,9 @@
             </button>
          </section>
 
-        <!-- <main v-else="show">
+        <main v-else="show">
         <div class="row  align-items-center">
-            <div v-for="lesson in searchLessons" class="col-lg-2 col-md-4 mt-1 ">
+            <div v-for="lesson in DisplayLessons" class="col-lg-2 col-md-4 mt-1 ">
                 <div class="card bg-light woop  ">
 
                     <img width="200" height="200" v-bind:src="lesson.image" class="card-img-top"> 
@@ -157,7 +164,7 @@
                 </div>
             </div>
         </div>
-        </main> -->
+        </main>
 
     </div>
 
