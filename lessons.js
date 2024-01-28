@@ -8,7 +8,7 @@ import lessons from './data//lessonArray.js';
         defaultSort: "null",
         sortDirection: "asc", 
         searchQuery:"", 
-        lessons: lessons,
+        lessons: [],
         checkoutInfo: {
           Name: "",
           Number: "",
@@ -18,6 +18,27 @@ import lessons from './data//lessonArray.js';
         carts: [],
     },
     methods: {
+      fetchDataFromAPI: function() {
+        fetch('http://test-1-env.eba-bwe75i22.eu-north-1.elasticbeanstalk.com/collections/Products')
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Network response was not ok');
+            }
+            return response.json();
+          })
+          .then(data => {
+            
+            this.lessons = data; // Assuming your lessons data structure is the same as the fetched data
+          })
+          .catch(error => {
+            console.error('Error fetching data from API:', error);
+          })
+          .finally(() => {
+            this.isLoading = false; // Set loading flag to false, regardless of success or failure
+          });
+      },
+
+
         addToCart: function(lesson){
             if (this.canAddToCart(lesson)) {
                 //check the list in the cart. If the lesson id already exists in the list of carts then just increase the number of classes available.
@@ -93,6 +114,7 @@ import lessons from './data//lessonArray.js';
             }
           });
           },
+          
         sortedCarts() {
             return this.carts.slice().sort((a, b) => {
               // Compare lessons based on the selected criteria
@@ -121,4 +143,9 @@ import lessons from './data//lessonArray.js';
             );
           }
     },
-})
+
+    mounted() {
+      // Fetch data when the component is mounted
+      this.fetchDataFromAPI();
+    },
+});
