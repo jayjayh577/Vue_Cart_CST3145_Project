@@ -199,7 +199,7 @@
           }
         
           // Use the selected criteria in the API endpoint
-          const apiEndpoint = `https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Products/search?${criteria}=${query}`;
+          const apiEndpoint = `https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Products/search?SUbject=${query}&Location=${query}`;
         
           // Fetch lessons based on the selected criteria
           fetch(apiEndpoint)
