@@ -187,30 +187,44 @@
           });
         },
         
-        searchLessons() {
-          const query = this.searchQuery.toLowerCase().trim();
-          const criteria = this.searchCriteria;
         
-          // Check if the search query is empty
-          if (query === '') {
-            // Reset this.lessons with the original data (or handle it based on your needs)
-            this.fetchDataFromAPI();
-            return;
+        async searchLessons() {
+          try {
+            // Check if the search query is empty
+            if (!this.searchQuery.trim()) {
+              // If the search query is empty, reset the lessons to the original data
+              this.fetchDataFromAPI();
+              return;
+            }
+        
+            // Construct the URL with the query parameter
+            const url = `https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Products/search?q=${this.searchQuery}`;
+        
+            // Make the fetch request
+            const response = await fetch(url);
+        
+            // Check if the request was successful
+            if (!response.ok) {
+              throw new Error('Failed to fetch search results');
+            }
+            console.log(url);
+        
+            // Parse the JSON response
+            const data = await response.json();
+        
+            // Update the lessons with the search results
+            this.lessons = data;
+        
+            // Check if search returned no results
+            if (this.lessons.length === 0) {
+              console.log('No results found.');
+              // You can provide a message to the user indicating no results were found
+            }
+          } catch (error) {
+            console.error('Error during search:', error);
+            // Handle errors as needed
           }
-        
-          // Use the selected criteria in the API endpoint
-          const apiEndpoint = `https://cartsystem-env.eba-pybmsf3v.eu-north-1.elasticbeanstalk.com/collections/Products/search?SUbject=${query}&Location=${query}`;
-        
-          // Fetch lessons based on the selected criteria
-          fetch(apiEndpoint)
-            .then(response => response.json())
-            .then(data => {
-              this.lessons = data;
-            })
-            .catch(error => {
-              console.error(`Error fetching data from search API (${criteria}):`, error);
-            });
-        },
+        },        
 
          
         sortedCarts() {

@@ -51,13 +51,7 @@
                   <option value="desc">Descending</option>
                 </select>
           
-                <!-- Add this select element to your HTML -->
-                <select class="form-select me-2" v-model="searchCriteria">
-                  <option value="subject">Subject</option>
-                  <option value="location">Location</option>
-                </select>
-
-                <!-- Keep the existing input for the search query -->
+               
                 <input
                   type="text"
                   class="form-control me-2"
@@ -66,6 +60,7 @@
                   @input="searchLessons"
                   placeholder="Search"
                 />
+                
               </div>
             </div>
           </nav>
